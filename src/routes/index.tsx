@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { ChatBubble } from "@/components/site/ChatBubble";
 import { Icon } from "@/components/site/Icon";
+import { BookingModal } from "@/components/site/BookingModal";
 
 const HERO_IMG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuBH0rbMym55fTUgrReKRi7n54s_-Byd6zvr71CKyyYWRq_AdckFnWwn8sJxnkNER3WMzKog9ot8adNN4vQ9WqBZ7vsJlBJJ5qNwcwC0KZVeW8UiSS-TgFhSrRexxtdekHYpxgR19jzByg1ig1HAMYNTB7WyUVZgaEV_MNeMj8FOiR--8fBAyN7eNz50g6pPcYJF9atBpgphxCJzyj8F4ymfwL72h4HzCIfDgnwtHL2sJVrr_rloF9nCRg";
@@ -26,32 +27,19 @@ const GALLERY_ALT = [
 ];
 
 const SERVICES = [
-  {
-    icon: "content_cut",
-    title: "Precision Haircuts",
-    copy: "A bespoke cut tailored to your head shape, hair type, and lifestyle. Includes consultation and hot towel finish.",
-    price: "$55",
-    duration: "45 MIN",
-  },
-  {
-    icon: "face",
-    title: "Beard Sculpting",
-    copy: "Masterful shaping using clippers and shears, finished with a crisp straight-razor line and premium beard oil.",
-    price: "$40",
-    duration: "30 MIN",
-  },
-  {
-    icon: "soap",
-    title: "Luxury Shaves",
-    copy: "The ultimate ritual: multiple hot towel applications, pre-shave oil, straight-razor glide, and cold compress.",
-    price: "$65",
-    duration: "60 MIN",
-  },
+  { name: "Hair Cut", price: "₹150", category: "essential" },
+  { name: "Kids Hair Cut", price: "₹150", category: "essential" },
+  { name: "Beard Trim", price: "₹70", category: "essential" },
+  { name: "Shaving", price: "₹70", category: "essential" },
+  { name: "Hair Styling", price: "₹250", category: "styling" },
+  { name: "Hair Colour", price: "₹250+", category: "styling" },
+  { name: "Facial", price: "₹299", category: "spa" },
+  { name: "Hair Spa", price: "₹399", category: "spa" },
 ];
 
-const title = "Curated Cuts | Crafting the Modern Gentleman";
+const title = "TUNE UP SALOON | Crafting the Modern Gentleman";
 const description =
-  "A luxury barbershop where heritage meets precision. Bespoke haircuts, beard sculpting, and straight-razor shaves for the modern gentleman.";
+  "TUNE UP SALOON - A premier barbershop where heritage meets precision. Discover our services, combo offers, and exclusive memberships.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -68,9 +56,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header onBookClick={() => setIsBookingModalOpen(true)} />
       <main>
         {/* Hero */}
         <section id="home" className="relative flex min-h-[921px] items-center overflow-hidden">
@@ -96,12 +86,12 @@ function Index() {
                 the man who demands excellence in every detail.
               </p>
               <div className="flex flex-col gap-6 sm:flex-row">
-                <a
-                  href="#contact"
-                  className="title-lg gold-glow bg-primary px-10 py-5 text-center uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110"
+                <button
+                  onClick={() => setIsBookingModalOpen(true)}
+                  className="title-lg gold-glow rounded-full bg-primary px-10 py-5 text-center uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110"
                 >
                   Book Your Chair
-                </a>
+                </button>
                 <a
                   href="#services"
                   className="title-lg border border-primary px-10 py-5 text-center uppercase tracking-widest text-primary transition-all hover:bg-primary/10"
@@ -140,12 +130,12 @@ function Index() {
               </div>
               <div className="md:pl-20">
                 <h2 className="headline-md mb-8 uppercase italic text-primary">
-                  A Legacy of Sharpness
+                  Welcome to TUNE UP
                 </h2>
                 <div className="mb-8 h-px w-20 bg-primary" />
                 <p className="body-lg mb-6 leading-relaxed text-on-surface">
-                  Curated Cuts isn't just a barbershop; it's a sanctuary for the ritual of grooming.
-                  Founded on the principles of traditional English barbering, we blend
+                  TUNE UP SALOON isn't just a barbershop; it's a sanctuary for the ritual of grooming.
+                  Founded on the principles of traditional barbering, we blend
                   centuries-old techniques with modern precision.
                 </p>
                 <p className="body-md mb-10 leading-relaxed text-on-surface-variant">
@@ -170,30 +160,70 @@ function Index() {
           className="relative bg-background py-section-mobile md:py-section"
         >
           <div className="mx-auto max-w-[1200px] px-margin">
-            <div className="mb-20 text-center">
+            <div className="mb-16 text-center">
               <span className="label-md uppercase tracking-[0.4em] text-primary">
                 The Service Menu
               </span>
-              <h2 className="display-lg mt-4 text-on-surface">REFINED SPECIALTIES</h2>
+              <h2 className="display-lg mt-4 text-on-surface">PRICING & SERVICES</h2>
               <div className="gold-filigree mx-auto mt-6 max-w-sm" />
             </div>
-            <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-              {SERVICES.map((s) => (
-                <div
-                  key={s.title}
-                  className="group relative border border-outline-variant/20 p-10 transition-all duration-500 hover:bg-surface-container"
-                >
-                  <div className="absolute left-0 top-0 h-0 w-1 bg-primary transition-all duration-500 group-hover:h-full" />
-                  <Icon name={s.icon} className="mb-6 block text-4xl text-primary" />
-                  <h3 className="headline-sm mb-4 uppercase text-on-surface">{s.title}</h3>
-                  <p className="body-md mb-8 text-on-surface-variant">{s.copy}</p>
-                  <div className="flex items-center">
-                    <span className="title-lg text-primary">{s.price}</span>
-                    <div className="dotted-leader" />
-                    <span className="label-md text-on-surface-variant">{s.duration}</span>
+            
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+              <div>
+                <h3 className="headline-sm mb-8 uppercase text-primary border-b border-primary/20 pb-4">Core Services</h3>
+                <ul className="space-y-6">
+                  {SERVICES.map((s) => (
+                    <li key={s.name} className="flex items-center justify-between group">
+                      <span className="body-lg text-on-surface transition-colors group-hover:text-primary">{s.name}</span>
+                      <div className="dotted-leader flex-1 mx-4 opacity-30" />
+                      <span className="title-lg text-primary">{s.price}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <div className="mt-8 p-6 bg-surface-container/50 border border-outline-variant/10 rounded-sm">
+                  <p className="label-md text-on-surface-variant mb-2">ADDITIONAL SERVICES</p>
+                  <p className="body-md text-on-surface">Zero Fade Haircut • Detan • Bridal Services • Head Massage</p>
+                </div>
+              </div>
+
+              <div className="space-y-12">
+                <div className="border border-primary/30 p-8 bg-surface-low relative overflow-hidden group hover:border-primary transition-colors">
+                  <div className="absolute top-0 right-0 bg-primary text-primary-foreground label-sm px-4 py-1 tracking-widest uppercase">Special</div>
+                  <h3 className="headline-sm mb-4 uppercase text-on-surface">Combo Offer</h3>
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <p className="body-lg text-on-surface-variant mb-1">Haircut + Beard</p>
+                      <p className="body-sm text-on-surface-variant opacity-70">The classic gentleman's combo</p>
+                    </div>
+                    <span className="display-sm text-primary">₹200</span>
                   </div>
                 </div>
-              ))}
+
+                <div className="border border-outline-variant/30 p-8 bg-surface-container relative">
+                  <Icon name="workspace_premium" className="absolute top-8 right-8 text-[48px] text-primary/20" />
+                  <h3 className="headline-sm mb-2 uppercase text-primary">TUNE UP VIP Membership</h3>
+                  <div className="flex items-baseline gap-2 mb-6">
+                    <span className="display-sm text-on-surface">₹999</span>
+                    <span className="label-md text-on-surface-variant">/ 1 Year Validity</span>
+                  </div>
+                  
+                  <ul className="space-y-4 body-md text-on-surface-variant">
+                    <li className="flex items-start gap-3">
+                      <Icon name="check_circle" className="text-primary mt-1 text-[18px]" />
+                      <span><strong>15% OFF</strong> on all services</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Icon name="check_circle" className="text-primary mt-1 text-[18px]" />
+                      <span><strong>1 FREE Haircut</strong> every 2 months</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Icon name="check_circle" className="text-primary mt-1 text-[18px]" />
+                      <span><strong>Priority Booking</strong> for appointments</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -242,17 +272,17 @@ function Index() {
             <h2 className="display-lg mb-12 uppercase italic leading-tight text-on-surface md:text-[64px]">
               Secure your slot in the <br /> Master's Chair
             </h2>
-            <a
-              href="#contact"
-              className="title-lg gold-glow inline-block bg-primary px-16 py-6 uppercase tracking-[0.2em] text-primary-foreground transition-all hover:scale-105"
+            <button
+              onClick={() => setIsBookingModalOpen(true)}
+              className="title-lg gold-glow inline-block rounded-full bg-primary px-16 py-6 uppercase tracking-[0.2em] text-primary-foreground transition-all hover:scale-105"
             >
               Book Appointment Now
-            </a>
+            </button>
           </div>
         </section>
       </main>
-      <ChatBubble />
       <Footer />
+      <BookingModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} />
     </div>
   );
 }
