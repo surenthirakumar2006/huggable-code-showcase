@@ -6,11 +6,18 @@ const links = [
   { label: "Contact", href: "#contact" },
 ];
 
-export function Header() {
+interface HeaderProps {
+  onBookClick?: () => void;
+}
+
+export function Header({ onBookClick }: HeaderProps = {}) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-outline-variant/30 bg-background/95 backdrop-blur-md">
       <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-margin py-6">
-        <div className="headline-md uppercase tracking-tighter text-primary">Curated Cuts</div>
+        <div className="flex items-center gap-2">
+          <img src="/TUS.png" alt="Tune Up Saloon Logo" className="h-12 w-auto object-contain" />
+          <span className="headline-md uppercase tracking-tighter text-primary">TUNE UP SALOON</span>
+        </div>
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link, i) => (
             <a
@@ -26,12 +33,15 @@ export function Header() {
             </a>
           ))}
         </div>
-        <a
-          href="#contact"
-          className="bg-primary px-6 py-2.5 text-[14px] font-bold uppercase tracking-widest text-primary-foreground transition-all hover:scale-105 active:scale-95"
+        <button
+          onClick={() => {
+            if (onBookClick) onBookClick();
+            else document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="bg-primary rounded-full px-6 py-2.5 text-[14px] font-bold uppercase tracking-widest text-primary-foreground transition-all hover:scale-105 active:scale-95"
         >
           Book Now
-        </a>
+        </button>
       </nav>
     </header>
   );
