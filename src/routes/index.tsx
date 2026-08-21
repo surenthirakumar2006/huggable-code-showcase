@@ -5,8 +5,7 @@ import { Footer } from "@/components/site/Footer";
 import { Icon } from "@/components/site/Icon";
 import { BookingModal } from "@/components/site/BookingModal";
 
-const HERO_IMG =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBH0rbMym55fTUgrReKRi7n54s_-Byd6zvr71CKyyYWRq_AdckFnWwn8sJxnkNER3WMzKog9ot8adNN4vQ9WqBZ7vsJlBJJ5qNwcwC0KZVeW8UiSS-TgFhSrRexxtdekHYpxgR19jzByg1ig1HAMYNTB7WyUVZgaEV_MNeMj8FOiR--8fBAyN7eNz50g6pPcYJF9atBpgphxCJzyj8F4ymfwL72h4HzCIfDgnwtHL2sJVrr_rloF9nCRg";
+const HERO_IMG = "/tus-bg.png";
 const RAZOR_IMG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuBpJd5hrVWjiacLa6uq2s-59cb0LMFTj4bw9wET3PGXVdYLwh7gVDHLMpQQGyrz4oBFZjPjImjaGHzUJ_Ids4E-ssrO5hKOkzBlv3fNGNJFc7aA1rhPNoTgf0AXCK5E4W02NqtPpk8BljUHVQzvkF2u1D3Ynq_-3Dh6UfsbcHQHcv5PSSiyXxR8vvXq_akzrYvoO8PmkHKnW9g2yW8pLqO-i0rqyluHgTB2rgV61fAzmrfb-YOjZzOPkw";
 const TOOLS_IMG =
