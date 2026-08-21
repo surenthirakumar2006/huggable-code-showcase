@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Curated Cuts design system — dark charcoal + gold, EB Garamond display,
- * Hanken Grotesk body. All colors are semantic tokens in oklch.
+ * Curated Cuts design system — Warm Ivory, Deep Sage, and Terracotta, EB Garamond display,
+ * Hanken Grotesk body. All colors are semantic tokens.
  */
 
 @theme inline {
@@ -36,8 +36,8 @@
   --color-card-foreground: var(--on-surface);
   --color-muted: var(--surface-low);
   --color-muted-foreground: var(--on-surface-variant);
-  --color-accent: var(--surface-container);
-  --color-accent-foreground: var(--on-surface);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-input: var(--outline-variant);
   --color-ring: var(--primary);
 
@@ -46,31 +46,33 @@
   --spacing-gutter: 24px;
   --spacing-margin: 24px;
 
-  --shadow-gold: 0px 4px 20px rgba(212, 175, 55, 0.15);
+  --shadow-primary: 0px 4px 20px rgba(83, 107, 91, 0.25); /* Deep Sage shadow */
 }
 
 :root {
   --radius: 0.25rem;
-  --background: oklch(0.17 0.004 196);
-  --foreground: oklch(0.92 0 0);
-  --surface: oklch(0.17 0.004 196);
-  --surface-lowest: oklch(0.14 0.004 196);
-  --surface-low: oklch(0.2 0.004 196);
-  --surface-container: oklch(0.24 0.004 196);
-  --surface-high: oklch(0.29 0.004 196);
-  --on-surface: oklch(0.92 0 0);
-  --on-surface-variant: oklch(0.81 0.021 90);
-  --primary: oklch(0.84 0.14 89);
-  --primary-dim: oklch(0.82 0.135 89);
-  --primary-foreground: oklch(0.29 0.07 84);
-  --outline-variant: oklch(0.42 0.035 92);
+  --background: #F7F3EC; /* Warm Ivory */
+  --foreground: #2E2A26; /* Soft Charcoal */
+  --surface: #F7F3EC;
+  --surface-lowest: #FFFFFF;
+  --surface-low: #F0E9DC;
+  --surface-container: #EADFCD;
+  --surface-high: #D9A566; /* Muted Gold highlight */
+  --on-surface: #2E2A26;
+  --on-surface-variant: #8A7B67; /* Warm Taupe */
+  --primary: #C1673B; /* Terracotta / Rust CTA */
+  --primary-dim: #D9A566; /* Muted Gold Highlight */
+  --primary-foreground: #FFFFFF;
+  --accent: #C1673B; /* Terracotta Accent */
+  --accent-foreground: #FFFFFF;
+  --outline-variant: #8A7B67; /* Warm Taupe */
 }
 
-@utility gold-glow {
-  box-shadow: var(--shadow-gold);
+@utility primary-glow {
+  box-shadow: var(--shadow-primary);
 }
 
-@utility gold-filigree {
+@utility primary-filigree {
   height: 1px;
   background: linear-gradient(
     90deg,

@@ -23,7 +23,7 @@ export function ChatBubble() {
           type="button"
           onClick={scrollToContact}
           aria-label="Chat with us"
-          className="animate-bounce rounded-full bg-primary p-5 text-primary-foreground gold-glow transition-transform duration-300 hover:scale-110 hover:animate-none"
+          className="animate-bounce rounded-full bg-primary p-5 text-primary-foreground primary-glow transition-transform duration-300 hover:scale-110 hover:animate-none"
         >
           <Icon name="chat" className="text-[32px]" />
         </button>

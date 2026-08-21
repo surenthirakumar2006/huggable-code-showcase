@@ -66,12 +66,12 @@ function Index() {
         <section id="home" className="relative flex min-h-[921px] items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <div
-              className="parallax-bg h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale"
+              className="parallax-bg h-full w-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url('${HERO_IMG}')` }}
               role="img"
               aria-label="Cinematic view of a classic luxury barbershop interior"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
+            {/* Overlays removed for full image visibility */}
           </div>
           <div className="relative z-10 mx-auto max-w-[1200px] px-margin py-section-mobile md:py-section">
             <div className="max-w-3xl">
@@ -88,7 +88,7 @@ function Index() {
               <div className="flex flex-col gap-6 sm:flex-row">
                 <button
                   onClick={() => setIsBookingModalOpen(true)}
-                  className="title-lg gold-glow rounded-full bg-primary px-10 py-5 text-center uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110"
+                  className="title-lg primary-glow rounded-full bg-primary px-10 py-5 text-center uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110"
                 >
                   Book Your Chair
                 </button>
@@ -165,7 +165,7 @@ function Index() {
                 The Service Menu
               </span>
               <h2 className="display-lg mt-4 text-on-surface">PRICING & SERVICES</h2>
-              <div className="gold-filigree mx-auto mt-6 max-w-sm" />
+              <div className="primary-filigree mx-auto mt-6 max-w-sm" />
             </div>
             
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
@@ -274,7 +274,7 @@ function Index() {
             </h2>
             <button
               onClick={() => setIsBookingModalOpen(true)}
-              className="title-lg gold-glow inline-block rounded-full bg-primary px-16 py-6 uppercase tracking-[0.2em] text-primary-foreground transition-all hover:scale-105"
+              className="title-lg primary-glow inline-block rounded-full bg-primary px-16 py-6 uppercase tracking-[0.2em] text-primary-foreground transition-all hover:scale-105"
             >
               Book Appointment Now
             </button>

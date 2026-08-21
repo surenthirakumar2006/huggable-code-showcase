@@ -167,7 +167,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
               
               <button
                 type="submit"
-                className="w-full rounded-full bg-primary text-primary-foreground py-4 mt-4 uppercase tracking-widest label-md hover:brightness-110 transition-all gold-glow"
+                className="w-full rounded-full bg-primary text-primary-foreground py-4 mt-4 uppercase tracking-widest label-md hover:brightness-110 transition-all primary-glow"
               >
                 Join Queue
               </button>
