@@ -70,30 +70,30 @@ function Index() {
               role="img"
               aria-label="Cinematic view of a classic luxury barbershop interior"
             />
-            {/* Overlays removed for full image visibility */}
+            <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-black/20"></div>
           </div>
-          <div className="relative z-10 mx-auto max-w-[1200px] px-margin py-section-mobile md:py-section">
-            <div className="max-w-3xl">
-              <span className="label-md mb-6 inline-block animate-pulse tracking-[0.3em] text-primary">
+          <div className="relative z-10 mx-auto flex max-w-[1200px] justify-end px-margin py-section-mobile md:py-section">
+            <div className="max-w-3xl text-right">
+              <span className="label-md mb-6 inline-block animate-pulse tracking-[0.3em] text-primary drop-shadow-md">
                 ESTABLISHED IN TRADITION
               </span>
-              <h1 className="display-lg mb-8 uppercase italic text-primary-dim drop-shadow-2xl md:text-[84px] md:leading-[1.1]">
+              <h1 className="display-lg mb-8 uppercase italic text-white drop-shadow-2xl md:text-[84px] md:leading-[1.1]">
                 Crafting the <br /> Modern Gentleman
               </h1>
-              <p className="body-lg mb-12 max-w-xl leading-relaxed text-on-surface-variant">
+              <p className="body-lg mb-12 ml-auto max-w-xl leading-relaxed text-white/90 drop-shadow-md">
                 Where heritage meets precision. Experience a curated grooming ritual designed for
                 the man who demands excellence in every detail.
               </p>
-              <div className="flex flex-col gap-6 sm:flex-row">
+              <div className="flex flex-col justify-end gap-6 sm:flex-row">
                 <button
                   onClick={() => setIsBookingModalOpen(true)}
-                  className="title-lg primary-glow rounded-full bg-primary px-10 py-5 text-center uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110"
+                  className="title-lg primary-glow rounded-full bg-primary px-10 py-5 text-center uppercase tracking-widest text-primary-foreground shadow-lg transition-all hover:brightness-110 hover:shadow-primary/50"
                 >
                   Book Your Chair
                 </button>
                 <a
                   href="#services"
-                  className="title-lg border border-primary px-10 py-5 text-center uppercase tracking-widest text-primary transition-all hover:bg-primary/10"
+                  className="title-lg rounded-full border-2 border-white/80 px-10 py-5 text-center uppercase tracking-widest text-white shadow-lg backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white"
                 >
                   View Services
                 </a>
