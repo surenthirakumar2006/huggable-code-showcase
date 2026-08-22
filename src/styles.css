@@ -15,8 +15,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --font-display: "EB Garamond", serif;
-  --font-body: "Hanken Grotesk", sans-serif;
+  --font-display: "Rye", serif;
+  --font-body: "Cormorant Garamond", serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
