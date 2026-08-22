@@ -1,9 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Icon } from "@/components/site/Icon";
 import { BookingModal } from "@/components/site/BookingModal";
+import { CatalogModal } from "@/components/site/CatalogModal";
+import { GalleryModal } from "@/components/site/GalleryModal";
 
 const HERO_IMG = "/tus-bg.png";
 const RAZOR_IMG =
@@ -56,6 +58,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -165,6 +169,13 @@ function Index() {
               </span>
               <h2 className="display-lg mt-4 text-on-surface">PRICING & SERVICES</h2>
               <div className="primary-filigree mx-auto mt-6 max-w-sm" />
+              <button 
+                onClick={() => setIsCatalogModalOpen(true)}
+                className="mt-6 label-md inline-flex items-center gap-2 uppercase tracking-widest text-primary transition-all hover:text-primary/80"
+              >
+                <Icon name="auto_stories" className="text-[18px]" />
+                View Style Catalog
+              </button>
             </div>
             
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
@@ -237,12 +248,6 @@ function Index() {
                   A visual testament to our commitment to detail.
                 </p>
               </div>
-              <a
-                href="#gallery"
-                className="label-md hidden uppercase tracking-widest text-primary hover:underline md:block"
-              >
-                View Full Portfolio
-              </a>
             </div>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               {GALLERY.map((src, i) => (
@@ -254,6 +259,14 @@ function Index() {
                   aria-label={GALLERY_ALT[i]}
                 />
               ))}
+            </div>
+            <div className="mt-12 text-center">
+              <button
+                onClick={() => setIsGalleryModalOpen(true)}
+                className="title-lg inline-flex items-center gap-3 rounded-full border border-primary/50 px-8 py-4 uppercase tracking-[0.2em] text-primary transition-all hover:border-primary hover:bg-primary/10"
+              >
+                View More
+              </button>
             </div>
           </div>
         </section>
@@ -282,6 +295,8 @@ function Index() {
       </main>
       <Footer />
       <BookingModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} />
+      <CatalogModal isOpen={isCatalogModalOpen} onClose={() => setIsCatalogModalOpen(false)} />
+      <GalleryModal isOpen={isGalleryModalOpen} onClose={() => setIsGalleryModalOpen(false)} />
     </div>
   );
 }
