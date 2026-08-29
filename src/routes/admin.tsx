@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { getBookings, updateBookingStatus, Booking } from "@/lib/bookingStore";
+import { getGalleryImages, addGalleryImage, removeGalleryImage, GalleryImage } from "@/lib/galleryStore";
+import { Icon } from "@/components/site/Icon";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPanel,
@@ -8,20 +10,38 @@ export const Route = createFileRoute("/admin")({
 
 function AdminPanel() {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [newImageUrl, setNewImageUrl] = useState("");
+  const [newImageAlt, setNewImageAlt] = useState("");
 
   useEffect(() => {
     // Poll for new bookings every 5 seconds
-    const fetchBookings = () => {
+    const fetchData = () => {
       setBookings(getBookings());
+      setGalleryImages(getGalleryImages());
     };
-    fetchBookings();
-    const interval = setInterval(fetchBookings, 5000);
+    fetchData();
+    const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const handleStatusChange = (id: string, status: "active" | "completed" | "expired") => {
     updateBookingStatus(id, status);
     setBookings(getBookings());
+  };
+
+  const handleAddImage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newImageUrl.trim()) return;
+    addGalleryImage(newImageUrl, newImageAlt);
+    setGalleryImages(getGalleryImages());
+    setNewImageUrl("");
+    setNewImageAlt("");
+  };
+
+  const handleRemoveImage = (id: string) => {
+    removeGalleryImage(id);
+    setGalleryImages(getGalleryImages());
   };
 
   const activeBookings = bookings.filter(b => b.status === "active").sort((a, b) => a.bookedAt - b.bookedAt);
@@ -115,6 +135,63 @@ function AdminPanel() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-16">
+          <h2 className="headline-sm text-on-surface mb-6 border-b border-outline-variant/20 pb-2">Gallery Management</h2>
+          
+          <form onSubmit={handleAddImage} className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end">
+            <div className="flex-1">
+              <label htmlFor="imageUrl" className="label-md block text-on-surface-variant mb-2">Image URL</label>
+              <input
+                id="imageUrl"
+                type="url"
+                required
+                value={newImageUrl}
+                onChange={(e) => setNewImageUrl(e.target.value)}
+                placeholder="https://example.com/image.jpg"
+                className="w-full bg-surface-lowest border border-outline-variant/40 px-4 py-2 text-on-surface focus:border-primary focus:outline-none"
+              />
+            </div>
+            <div className="flex-1">
+              <label htmlFor="imageAlt" className="label-md block text-on-surface-variant mb-2">Description (Alt Text)</label>
+              <input
+                id="imageAlt"
+                type="text"
+                value={newImageAlt}
+                onChange={(e) => setNewImageAlt(e.target.value)}
+                placeholder="Brief description of the style"
+                className="w-full bg-surface-lowest border border-outline-variant/40 px-4 py-2 text-on-surface focus:border-primary focus:outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-primary text-primary-foreground px-6 py-2 uppercase tracking-widest hover:bg-primary/90 transition-colors h-[42px]"
+            >
+              Add Image
+            </button>
+          </form>
+
+          {galleryImages.length === 0 ? (
+            <p className="body-md text-on-surface-variant italic">No images in gallery.</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {galleryImages.map((img) => (
+                <div key={img.id} className="relative group border border-outline-variant/20 rounded-sm overflow-hidden bg-surface-lowest aspect-square">
+                  <img src={img.url} alt={img.alt} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <button
+                      onClick={() => handleRemoveImage(img.id)}
+                      className="bg-red-500/90 text-white rounded-full p-3 hover:bg-red-600 transition-colors"
+                      title="Delete Image"
+                    >
+                      <Icon name="delete" className="text-[24px]" />
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

@@ -1,31 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Icon } from "@/components/site/Icon";
 import { BookingModal } from "@/components/site/BookingModal";
 import { CatalogModal } from "@/components/site/CatalogModal";
 import { GalleryModal } from "@/components/site/GalleryModal";
+import { getGalleryImages } from "@/lib/galleryStore";
 
 const HERO_IMG = "/tus-bg.png";
 const RAZOR_IMG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuBpJd5hrVWjiacLa6uq2s-59cb0LMFTj4bw9wET3PGXVdYLwh7gVDHLMpQQGyrz4oBFZjPjImjaGHzUJ_Ids4E-ssrO5hKOkzBlv3fNGNJFc7aA1rhPNoTgf0AXCK5E4W02NqtPpk8BljUHVQzvkF2u1D3Ynq_-3Dh6UfsbcHQHcv5PSSiyXxR8vvXq_akzrYvoO8PmkHKnW9g2yW8pLqO-i0rqyluHgTB2rgV61fAzmrfb-YOjZzOPkw";
 const TOOLS_IMG =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuAeZEMF-6TZXeHI-nbfSJJPogyqxTlftKGPYRxxwKh66OypEnILvW52WRd8vKcmDBhoDd7FmbanAl0xYagRFLFj8LqxdJiH4i10_bb6P0_NVsjak9-KhixIKqPCadegVhby0cjiIBBNtF7ovkejjoHW9mTx62Gv1qcjOC8ENIktUMMS4Z3FUXLjM6CA72SVF6mSdeRufmyLv5dcjTrXN1MyRTHoOfSx7A3kBQvmRnfjh-ttTIAwZt_RVw";
-
-const GALLERY = [
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAgkD03Q68BnJv7JCwznLbMBAcwbtHV6tI-8jwnrH9cpy1Cqg69Ol39a6ebLO8EbTTUsidoC2Acl_w5BHkOu1mgYt-PpCopxwiyykCMEA-7gJRydthvhrG3eX_XCBfcAqDKI0Hoii0StimjpIaGVpdAWRiYQZlNZyv6tIsFzcE9d934LQRb7FOtP4nPememxkRd26dmMFli6j6U33Mo6NH8qG7FF_XZRvMMxZTS28Jx97f9oXhnORkejg",
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuD-FkL8xmwFGj6OYkWuvGv9_PVmkZtZYxhNqHZiOzYP95n294Wro_yHfp-nSoYjEtAufl9B8X6E4rh78A1dQLzTvXXkpP-u9a5t_4SzLZcVpioKsI3SbmyJKgJs3BHpN2FmmVB0WsWAafqpUvDqpZND8VcbcQZTwKR9o1piWVKmVv-B0Fe0lNYJc6-VGgqC1p1ofCv_LwZCjq0C4-o-Eybiu93cqSNwKEgznT2yiRqMwMK5W2tFfAWNPg",
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBHFC3je60Xr8B1a7i3wYVIsuu29R36qif559t046wmNeiPQShnpTE6N0fNKi37IWSH5K1FFe3RKu-7ZRNA4DjsRazJ3xstMxkwp9_DzK5PNUleGOmDKCFxKCpqDz7AD7LREnoj4cpAJpaj8mda5jYSO5CSXuOJYWhC9PUSK7yqBaMU_RdMn5B07wvifU_KJaSU2tZHi49-mTmUQR_Aow4aaHU0wLxqoT24gCZYy6iCPHsC6QpcoeS6ug",
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuCZlaUnMzkEVnZ6mfbDwr_Hk6L_Tb2ZPIuWE4sDUabt8BTOzR4j-GpTey8HK1rARPtfYCaBt1T1dlrONbB6B5EiZVhUR6FSgYMARJta9cDZmV3wNMTvfD1DGZ0dfXizCHeQH4ImJTfusW1jNbCUx59EfANGSTP4tjgYlczORRlif3BjiIIEVQQWxoZy00GmNkF1HsAbEYAS6NNpvvcq8vpzmAug7QEUHd_O0JDHqa6fPNCqT7sVAg9PeQ",
-];
-
-const GALLERY_ALT = [
-  "Editorial black and white portrait of a sharp undercut haircut",
-  "Close-up of a defined beard fade with straight-razor lines",
-  "Distinguished older man with a silver side-part pompadour",
-  "Barber mid-cut inside the shop's warm wood interior",
-];
 
 const SERVICES = [
   { name: "Hair Cut", price: "₹150", category: "essential" },
@@ -60,6 +47,21 @@ function Index() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
+  const [galleryImages, setGalleryImages] = useState(() => getGalleryImages().slice(0, 4));
+
+  useEffect(() => {
+    // Listen for storage changes in case admin updates gallery in another tab or after mount
+    const handleStorageChange = () => {
+      setGalleryImages(getGalleryImages().slice(0, 4));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    // Also set an interval just in case they navigate back without reload
+    const interval = setInterval(handleStorageChange, 5000);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -250,13 +252,13 @@ function Index() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-              {GALLERY.map((src, i) => (
+              {galleryImages.map((img) => (
                 <div
-                  key={src}
+                  key={img.id}
                   className="aspect-square cursor-pointer bg-cover bg-center grayscale transition-all duration-700 hover:grayscale-0"
-                  style={{ backgroundImage: `url('${src}')` }}
+                  style={{ backgroundImage: `url('${img.url}')` }}
                   role="img"
-                  aria-label={GALLERY_ALT[i]}
+                  aria-label={img.alt}
                 />
               ))}
             </div>
