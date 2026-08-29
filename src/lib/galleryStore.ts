@@ -5,24 +5,24 @@ export interface GalleryImage {
   addedAt: number;
 }
 
-const STORAGE_KEY = "tuneup_gallery_v3";
+const STORAGE_KEY = "tuneup_gallery_v4";
 
 const DEFAULT_GALLERY: GalleryImage[] = [
   {
     id: "g1",
-    url: "/comp/img1.png",
+    url: "public/comp/img1.webp",
     alt: "Editorial black and white portrait of a sharp undercut haircut",
     addedAt: 1,
   },
   {
     id: "g2",
-    url: "/comp/img2.png",
+    url: "public/comp/img2.webp",
     alt: "Close-up of a defined beard fade with straight-razor lines",
     addedAt: 2,
   },
   {
     id: "g3",
-    url: "/comp/img3.png",
+    url: "public/comp/img3.webp",
     alt: "Distinguished older man with a silver side-part pompadour",
     addedAt: 3,
   }
